@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpManager : MonoBehaviour
+public class PlayerLevelUp : MonoBehaviour
 {
     public int statsPointRemining;
 
     int damagePoint, penetrationPoint, reloadPoint, bulletSpeedPoint, maxHealthPoint, moveSpeedPoint;
-    public Slider damageSlider, penetrationSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, MoveSpeedSlider;
+    public Slider damageSlider, penetrationSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, moveSpeedSlider;
+    public GameObject damageButton, penetrationButton, reloadButton, bulletSpeedButton, maxHealthButton, moveSpeedButton;
 
     public Animator upgradePanelAnim;
 
@@ -35,54 +36,62 @@ public class LevelUpManager : MonoBehaviour
 
     public void AddPoint(int currentStat)
     {
+        if (statsPointRemining <= 0) return;
+
         switch (currentStat)
         {
             case 0:
-                if(damagePoint < 7 && statsPointRemining > 0)
+                if(damagePoint < 7)
                 {
                     playerCombat.attackDamage *= 1.15f;
                     damagePoint++;
-                    damageSlider.value = damagePoint * 2;
+                    damageSlider.value = damagePoint;
+                    if(damagePoint >= 7) damageButton.SetActive(false);
                 }
                 break;
             case 1:
-                if (penetrationPoint < 7 && statsPointRemining > 0)
+                if (penetrationPoint < 7)
                 {
                     playerCombat.bullletPenetration += 1;
                     penetrationPoint++;
-                    penetrationSlider.value = damagePoint * 2;
+                    penetrationSlider.value = penetrationPoint;
+                    if (penetrationPoint >= 7) penetrationButton.SetActive(false);
                 }
                 break;
             case 2:
-                if (reloadPoint < 7 && statsPointRemining > 0)
+                if (reloadPoint < 7)
                 {
                     playerCombat.attackRate *= .8f;
                     reloadPoint++;
-                    reloadSlider.value = reloadPoint * 2;
+                    reloadSlider.value = reloadPoint;
+                    if (reloadPoint >= 7) reloadButton.SetActive(false);
                 }
                 break;
             case 3:
-                if (bulletSpeedPoint < 7 && statsPointRemining > 0)
+                if (bulletSpeedPoint < 7)
                 {
                     playerCombat.bulletSpeed *= 1.2f;
                     bulletSpeedPoint++;
-                    bulletSpeedSlider.value = bulletSpeedPoint * 2;
+                    bulletSpeedSlider.value = bulletSpeedPoint;
+                    if (bulletSpeedPoint >= 7) bulletSpeedButton.SetActive(false);
                 }
                 break;
             case 4:
-                if (maxHealthPoint < 7 && statsPointRemining > 0)
+                if (maxHealthPoint < 7)
                 {
                     playerHealth.maxHealth *= 1.15f;
                     maxHealthPoint++;
-                    maxHealthSlider.value = maxHealthPoint * 2;
+                    maxHealthSlider.value = maxHealthPoint;
+                    if (maxHealthPoint >= 7) maxHealthButton.SetActive(false);
                 }
                 break;
             case 5:
-                if (moveSpeedPoint < 7 && statsPointRemining > 0)
+                if (moveSpeedPoint < 7)
                 {
                     playerController.moveSpeed *= 1.08f;
                     moveSpeedPoint++;
-                    MoveSpeedSlider.value = moveSpeedPoint * 2;
+                    moveSpeedSlider.value = moveSpeedPoint;
+                    if (moveSpeedPoint >= 7) moveSpeedButton.SetActive(false);
                 }
                 break;
         }

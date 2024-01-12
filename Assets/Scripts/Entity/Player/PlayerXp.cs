@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ScoreManager : MonoBehaviour
+public class PlayerXp : MonoBehaviour
 {
     public float maxXp;
     public float currentXp;
@@ -13,11 +13,11 @@ public class ScoreManager : MonoBehaviour
     public Slider xpSlider;
     public TMP_Text lvlTxt;
 
-    LevelUpManager levelUpManager;
+    PlayerLevelUp levelUpManager;
 
     private void Awake()
     {
-        levelUpManager = FindFirstObjectByType<LevelUpManager>();
+        levelUpManager = FindFirstObjectByType<PlayerLevelUp>();
     }
 
     private void Start()

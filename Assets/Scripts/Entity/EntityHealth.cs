@@ -14,7 +14,7 @@ public class EntityHealth : MonoBehaviour
     public GameObject healthBar;
     Transform canvas;
     EntityHealthManager entityHealthManager;
-    ScoreManager scoreManager;
+    PlayerXp scoreManager;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class EntityHealth : MonoBehaviour
         healthSlider = Instantiate(healthBar, canvas).GetComponent<Slider>();
         
         entityHealthManager = FindAnyObjectByType<EntityHealthManager>();
-        scoreManager = FindAnyObjectByType<ScoreManager>();
+        scoreManager = FindAnyObjectByType<PlayerXp>();
         entityHealthManager.entitys.Add(this);
     }
 
