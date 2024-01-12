@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     float angle;
 
+    public Transform rotationPoint;
+
     Vector2 moveInput;
 
     Vector2 mousePos;
@@ -45,7 +47,7 @@ public class PlayerController : MonoBehaviour
         lookDir = mousePos - rb.position;
 
         angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        rotationPoint.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void GetInput()

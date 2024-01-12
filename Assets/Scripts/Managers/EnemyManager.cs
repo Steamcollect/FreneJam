@@ -17,6 +17,8 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
+        if (enemys.Count == 0 || player == null) return;
+
         for (int i = 0; i < enemys.Count; i++)
         {
             if (enemys[i] != null)
@@ -25,12 +27,10 @@ public class EnemyManager : MonoBehaviour
 
                 Vector2 lookDir = player.transform.position - enemys[i].transform.position;
                 float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-                enemys[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+                enemys[i].rotationPoint.rotation = Quaternion.Euler(0, 0, angle);
 
-                if (distanceFromPlayer > enemys[i].attackRange)
-                {
-                    enemys[i].transform.position = Vector2.SmoothDamp(enemys[i].transform.position, player.transform.position, ref velocity, distanceFromPlayer / enemys[i].moveSpeed);
-                }
+                if (distanceFromPlayer >= enemys[i].attackRange) enemys[i].transform.position = Vector2.SmoothDamp(enemys[i].transform.position, player.transform.position, ref velocity, distanceFromPlayer / enemys[i].moveSpeed);
+                else if(distanceFromPlayer < enemys[i].attackRange && enemys[i].canAttack) enemys[i].Attack();
             }
             else
             {

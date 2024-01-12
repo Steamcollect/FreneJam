@@ -19,7 +19,7 @@ public class BulletManager : MonoBehaviour
         {
             if (bullets[i] != null)
             {
-                if(Vector2.Distance(bullets[i].transform.position, player.transform.position) > 25)
+                if(player != null && Vector2.Distance(bullets[i].transform.position, player.transform.position) > 25)
                 {
                     Destroy(bullets[i].gameObject);
                     bullets.Remove(bullets[i]);

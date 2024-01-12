@@ -7,6 +7,7 @@ public class PlayerCombat : MonoBehaviour
     public float attackRate;
     public float attackDamage;
     public float bulletSpeed;
+    public int bullletPenetration;
 
     bool canAttack = true;
     bool isClicking;
@@ -40,6 +41,7 @@ public class PlayerCombat : MonoBehaviour
         Bullet currentBullet = Instantiate(bulletPrefabs, attackPoint.position, attackPoint.rotation).GetComponent<Bullet>();
         currentBullet.targetTag = "Enemy";
         currentBullet.attackDamage = attackDamage;
+        currentBullet.maxPenetration = bullletPenetration;
         currentBullet.moveSpeed = bulletSpeed;
         bulletManager.bullets.Add(currentBullet);
     }
