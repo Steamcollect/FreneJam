@@ -43,7 +43,7 @@ public class PlayerLevelUp : MonoBehaviour
             case 0:
                 if(damagePoint < 7)
                 {
-                    playerCombat.attackDamage *= 1.15f;
+                    playerCombat.attackDamage += 5;
                     damagePoint++;
                     damageSlider.value = damagePoint;
                     if(damagePoint >= 7) damageButton.SetActive(false);
