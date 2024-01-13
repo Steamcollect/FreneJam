@@ -9,20 +9,20 @@ public class PlayerCombat : MonoBehaviour
     public float bulletSpeed;
     public int bullletPenetration;
 
+    int currentAttackPointIndex = 0;
+
     bool canAttack = true;
     bool isClicking;
 
     public GameObject bulletPrefabs;
 
-    public Transform attackPoint;
+    public List<Transform> attackPoints;
 
-    CameraShake camShake;
     CouldownManager couldownManager;
     BulletManager bulletManager;
 
     private void Awake()
     {
-        camShake = FindAnyObjectByType<CameraShake>();
         couldownManager = FindAnyObjectByType<CouldownManager>();
         bulletManager= FindAnyObjectByType<BulletManager>();
     }
@@ -38,11 +38,13 @@ public class PlayerCombat : MonoBehaviour
     {
         StartCoroutine(couldownManager.Wait(value => canAttack = value, attackRate));
 
-        Bullet currentBullet = Instantiate(bulletPrefabs, attackPoint.position, attackPoint.rotation).GetComponent<Bullet>();
+        Bullet currentBullet = Instantiate(bulletPrefabs, attackPoints[currentAttackPointIndex].position, attackPoints[currentAttackPointIndex].rotation).GetComponent<Bullet>();
         currentBullet.targetTag = "Enemy";
         currentBullet.attackDamage = attackDamage;
         currentBullet.maxPenetration = bullletPenetration;
         currentBullet.moveSpeed = bulletSpeed;
         bulletManager.bullets.Add(currentBullet);
+
+        currentAttackPointIndex = (currentAttackPointIndex + 1) % attackPoints.Count;
     }
 }

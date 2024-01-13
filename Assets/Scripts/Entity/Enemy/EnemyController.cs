@@ -9,6 +9,7 @@ public abstract class EnemyController : MonoBehaviour
     public float attackRange;
     public float bulletSpeed;
 
+    [HideInInspector] public Vector2 velocity = Vector2.zero;
 
     public float attackRate;
     [HideInInspector]public bool canAttack = true;

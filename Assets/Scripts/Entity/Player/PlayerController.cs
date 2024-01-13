@@ -6,13 +6,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
-
     float angle;
 
     public Transform rotationPoint;
 
     Vector2 moveInput;
-
     Vector2 mousePos;
     Vector2 lookDir;
 

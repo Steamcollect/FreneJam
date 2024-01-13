@@ -97,8 +97,6 @@ public class PlayerLevelUp : MonoBehaviour
         }
 
         statsPointRemining--;
-        playerHealth.GiveHealth(playerHealth.maxHealth * .2f);
-
         if (statsPointRemining <= 0) CloseUpgradePanel();
     }
 }
