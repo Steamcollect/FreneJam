@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerLevelUp : MonoBehaviour
 {
     public int statsPointRemining;
+    public TMP_Text reminingPointsTxt;
 
     int damagePoint, penetrationPoint, reloadPoint, bulletSpeedPoint, maxHealthPoint, moveSpeedPoint;
     public Slider damageSlider, penetrationSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, moveSpeedSlider;
@@ -28,6 +30,7 @@ public class PlayerLevelUp : MonoBehaviour
     {
         statsPointRemining++;
         upgradePanelAnim.SetBool("IsIn", true);
+        reminingPointsTxt.text = statsPointRemining.ToString();
     }
     void CloseUpgradePanel()
     {
@@ -70,7 +73,7 @@ public class PlayerLevelUp : MonoBehaviour
             case 3:
                 if (bulletSpeedPoint < 7)
                 {
-                    playerCombat.bulletSpeed *= 1.2f;
+                    playerCombat.bulletSpeed *= 1.14f;
                     bulletSpeedPoint++;
                     bulletSpeedSlider.value = bulletSpeedPoint;
                     if (bulletSpeedPoint >= 7) bulletSpeedButton.SetActive(false);
@@ -97,6 +100,7 @@ public class PlayerLevelUp : MonoBehaviour
         }
 
         statsPointRemining--;
+        reminingPointsTxt.text = statsPointRemining.ToString();
         if (statsPointRemining <= 0) CloseUpgradePanel();
     }
 }

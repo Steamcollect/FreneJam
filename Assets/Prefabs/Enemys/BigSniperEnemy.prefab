@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2.5
-  attackDamage: 3
+  attackDamage: 10
   attackRange: 10
   bulletSpeed: 20
   velocity: {x: 0, y: 0}
@@ -231,6 +231,7 @@ MonoBehaviour:
   xpGiven: 100
   currentHealth: 0
   healthSlider: {fileID: 0}
+  deathParticle: {fileID: 1631053743976459618, guid: 540bfb6bc6b89ff4f8e66a582396249a, type: 3}
   healthBar: {fileID: 1321584227793855821, guid: 792dd1fef6167da44a343adc1402c8cc, type: 3}
 --- !u!1 &5761902710520952018
 GameObject:

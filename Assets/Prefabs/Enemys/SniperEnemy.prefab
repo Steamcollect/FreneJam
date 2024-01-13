@@ -198,6 +198,7 @@ MonoBehaviour:
   xpGiven: 7
   currentHealth: 0
   healthSlider: {fileID: 0}
+  deathParticle: {fileID: 1631053743976459618, guid: 540bfb6bc6b89ff4f8e66a582396249a, type: 3}
   healthBar: {fileID: 1321584227793855821, guid: 792dd1fef6167da44a343adc1402c8cc, type: 3}
 --- !u!1 &4675413508967422319
 GameObject:

@@ -75,6 +75,7 @@ public class PlayerXp : MonoBehaviour
                     playerCanon2.SetActive(true);
                     playerCombat.attackPoints = playerAttackPoints2;
                     playerCombat.attackRate *= .5f;
+                    playerCombat.currentAttackPointIndex = 0;
                     break;
                 case 15:
                     enemySpawner.enemySpawnStats[5].haveTheLevelToSpawn = true;
@@ -87,12 +88,14 @@ public class PlayerXp : MonoBehaviour
                     playerCanon3.SetActive(true);
                     playerCombat.attackPoints = playerAttackPoints3;
                     playerCombat.attackRate *= .5f;
+                    playerCombat.currentAttackPointIndex = 0;
                     break;
                 case 30:
                     playerCanon3.SetActive(false);
                     playerCanon4.SetActive(true);
                     playerCombat.attackPoints = playerAttackPoints4;
                     playerCombat.attackRate *= .5f;
+                    playerCombat.currentAttackPointIndex = 0;
                     break;
             }
 

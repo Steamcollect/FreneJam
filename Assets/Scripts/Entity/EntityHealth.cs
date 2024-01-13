@@ -10,7 +10,9 @@ public class EntityHealth : MonoBehaviour
     public float xpGiven;
     [HideInInspector]public float currentHealth;
     [HideInInspector] public Slider healthSlider;
-    
+
+    public GameObject deathParticle;
+
     public GameObject healthBar;
     Transform canvas;
     EntityHealthManager entityHealthManager;
@@ -57,8 +59,9 @@ public class EntityHealth : MonoBehaviour
     public void Die()
     {
         scoreManager.TakeXp(xpGiven);
+        Instantiate(deathParticle, transform.position, Quaternion.identity);
 
-        Destroy(healthSlider.gameObject);
+        Destroy(healthSlider.gameObject, .01f) ;
         Destroy(this.gameObject);
     }
 }

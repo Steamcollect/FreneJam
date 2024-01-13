@@ -294,10 +294,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPos: {fileID: 4979719530397859132}
-  maxHealth: 50
+  maxHealth: 150
   xpGiven: 15
   currentHealth: 0
   healthSlider: {fileID: 0}
+  deathParticle: {fileID: 1631053743976459618, guid: 540bfb6bc6b89ff4f8e66a582396249a, type: 3}
   healthBar: {fileID: 1321584227793855821, guid: 792dd1fef6167da44a343adc1402c8cc, type: 3}
 --- !u!1 &5513920371333409965
 GameObject:

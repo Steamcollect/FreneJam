@@ -9,7 +9,7 @@ public class PlayerCombat : MonoBehaviour
     public float bulletSpeed;
     public int bullletPenetration;
 
-    int currentAttackPointIndex = 0;
+    [HideInInspector] public int currentAttackPointIndex = 0;
 
     bool canAttack = true;
     bool isClicking;
