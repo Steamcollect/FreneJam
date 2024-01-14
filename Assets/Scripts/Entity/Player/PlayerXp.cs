@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using DG.Tweening;
 public class PlayerXp : MonoBehaviour
 {
     public float maxXp;
@@ -107,6 +107,6 @@ public class PlayerXp : MonoBehaviour
             levelUpManager.OpenUpgradePanel();
         }
 
-        xpSlider.value = currentXp;
+        xpSlider.DOValue(currentXp, .8f).SetEase(Ease.OutQuint);
     }
 }

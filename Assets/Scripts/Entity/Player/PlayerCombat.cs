@@ -9,6 +9,8 @@ public class PlayerCombat : MonoBehaviour
     public float bulletSpeed;
     public int bullletPenetration;
 
+    public AudioClip[] attackSounds;
+
     [HideInInspector] public int currentAttackPointIndex = 0;
 
     bool canAttack = true;
@@ -18,11 +20,13 @@ public class PlayerCombat : MonoBehaviour
 
     public List<Transform> attackPoints;
 
+    AudioManager audioManager;
     CouldownManager couldownManager;
     BulletManager bulletManager;
 
     private void Awake()
     {
+        audioManager = FindAnyObjectByType<AudioManager>();
         couldownManager = FindAnyObjectByType<CouldownManager>();
         bulletManager= FindAnyObjectByType<BulletManager>();
     }

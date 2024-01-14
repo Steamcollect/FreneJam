@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class EntityHealth : MonoBehaviour
 {
@@ -45,7 +46,11 @@ public class EntityHealth : MonoBehaviour
             return;
         }
 
-        healthSlider.value = currentHealth;
+        float tmp = healthSlider.value;
+        DOTween.To(() => tmp, x => tmp = x, currentHealth, .1f)
+            .OnUpdate(() => {
+                healthSlider.value = tmp;
+            });
     }
 
     public void GiveHealth(float healthGiven)

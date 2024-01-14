@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class PlayerLevelUp : MonoBehaviour
 {
     public int statsPointRemining;
     public TMP_Text reminingPointsTxt;
 
-    int damagePoint, penetrationPoint, reloadPoint, bulletSpeedPoint, maxHealthPoint, moveSpeedPoint;
-    public Slider damageSlider, penetrationSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, moveSpeedSlider;
-    public GameObject damageButton, penetrationButton, reloadButton, bulletSpeedButton, maxHealthButton, moveSpeedButton;
+    int damagePoint, penetrationPoint, reloadPoint, bulletSpeedPoint, maxHealthPoint, moveSpeedPoint, visionPoint;
+    public Slider damageSlider, penetrationSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, moveSpeedSlider, visionSlider;
+    public GameObject damageButton, penetrationButton, reloadButton, bulletSpeedButton, maxHealthButton, moveSpeedButton, visionButton;
 
     public Animator upgradePanelAnim;
 
@@ -19,11 +20,15 @@ public class PlayerLevelUp : MonoBehaviour
     PlayerController playerController;
     EntityHealth playerHealth;
 
+    Camera cam;
+
     private void Awake()
     {
         playerCombat = FindFirstObjectByType<PlayerCombat>();
         playerController = FindFirstObjectByType<PlayerController>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<EntityHealth>();
+
+        cam = Camera.main;
     }
 
     public void OpenUpgradePanel()
@@ -48,8 +53,8 @@ public class PlayerLevelUp : MonoBehaviour
                 {
                     playerCombat.attackDamage += 5;
                     damagePoint++;
-                    damageSlider.value = damagePoint;
-                    if(damagePoint >= 7) damageButton.SetActive(false);
+                    damageSlider.DOValue(damagePoint, .4f).SetEase(Ease.OutQuint);
+                    if (damagePoint >= 7) damageButton.SetActive(false);
                 }
                 break;
             case 1:
@@ -57,7 +62,7 @@ public class PlayerLevelUp : MonoBehaviour
                 {
                     playerCombat.bullletPenetration += 1;
                     penetrationPoint++;
-                    penetrationSlider.value = penetrationPoint;
+                    penetrationSlider.DOValue(penetrationPoint, .4f).SetEase(Ease.OutQuint);
                     if (penetrationPoint >= 7) penetrationButton.SetActive(false);
                 }
                 break;
@@ -66,7 +71,7 @@ public class PlayerLevelUp : MonoBehaviour
                 {
                     playerCombat.attackRate *= .8f;
                     reloadPoint++;
-                    reloadSlider.value = reloadPoint;
+                    reloadSlider.DOValue(reloadPoint, .4f).SetEase(Ease.OutQuint);
                     if (reloadPoint >= 7) reloadButton.SetActive(false);
                 }
                 break;
@@ -75,7 +80,7 @@ public class PlayerLevelUp : MonoBehaviour
                 {
                     playerCombat.bulletSpeed *= 1.14f;
                     bulletSpeedPoint++;
-                    bulletSpeedSlider.value = bulletSpeedPoint;
+                    bulletSpeedSlider.DOValue(bulletSpeedPoint, .4f).SetEase(Ease.OutQuint);
                     if (bulletSpeedPoint >= 7) bulletSpeedButton.SetActive(false);
                 }
                 break;
@@ -84,7 +89,7 @@ public class PlayerLevelUp : MonoBehaviour
                 {
                     playerHealth.maxHealth *= 1.15f;
                     maxHealthPoint++;
-                    maxHealthSlider.value = maxHealthPoint;
+                    maxHealthSlider.DOValue(maxHealthPoint, .4f).SetEase(Ease.OutQuint);
                     if (maxHealthPoint >= 7) maxHealthButton.SetActive(false);
                 }
                 break;
@@ -93,8 +98,22 @@ public class PlayerLevelUp : MonoBehaviour
                 {
                     playerController.moveSpeed *= 1.08f;
                     moveSpeedPoint++;
-                    moveSpeedSlider.value = moveSpeedPoint;
+                    moveSpeedSlider.DOValue(moveSpeedPoint, .4f).SetEase(Ease.OutQuint);
                     if (moveSpeedPoint >= 7) moveSpeedButton.SetActive(false);
+                }
+                break;
+            case 6:
+                if (visionPoint < 7)
+                {
+                    float tmp = cam.orthographicSize;
+                    DOTween.To(() => tmp, x => tmp = x, cam.orthographicSize * 1.07f, 1f)
+                        .OnUpdate(() => {
+                            cam.orthographicSize = tmp;
+                        });
+
+                    visionPoint++;
+                    visionSlider.DOValue(visionPoint, .4f).SetEase(Ease.OutQuint);
+                    if (moveSpeedPoint >= 7) visionButton.SetActive(false);
                 }
                 break;
         }
