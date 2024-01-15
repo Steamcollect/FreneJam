@@ -9,8 +9,11 @@ public class EntityHealth : MonoBehaviour
     public Transform healthBarPos;
     public float maxHealth;
     public float xpGiven;
+    public int scoreGiven;
     [HideInInspector]public float currentHealth;
     [HideInInspector] public Slider healthSlider;
+
+    public bool isPlayer;
 
     public GameObject deathParticle;
 
@@ -18,12 +21,14 @@ public class EntityHealth : MonoBehaviour
     Transform canvas;
     EntityHealthManager entityHealthManager;
     PlayerXp scoreManager;
+    PauseMenu pauseMenu;
 
     private void Awake()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
         healthSlider = Instantiate(healthBar, canvas).GetComponent<Slider>();
         
+        pauseMenu = FindFirstObjectByType<PauseMenu>();
         entityHealthManager = FindAnyObjectByType<EntityHealthManager>();
         scoreManager = FindAnyObjectByType<PlayerXp>();
         entityHealthManager.entitys.Add(this);
@@ -63,10 +68,12 @@ public class EntityHealth : MonoBehaviour
 
     public void Die()
     {
-        scoreManager.TakeXp(xpGiven);
         Instantiate(deathParticle, transform.position, Quaternion.identity);
 
+        if (isPlayer) pauseMenu.OpenGameOverPanel();
+        else scoreManager.TakeXp(xpGiven, scoreGiven, transform.position);
+
         Destroy(healthSlider.gameObject, .01f) ;
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

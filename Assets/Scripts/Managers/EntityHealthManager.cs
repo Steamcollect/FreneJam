@@ -7,15 +7,17 @@ public class EntityHealthManager : MonoBehaviour
     public List<EntityHealth> entitys;
 
     Camera cam;
+    GameStateManager gameStateManager;
 
     private void Awake()
     {
         cam = Camera.main;
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
     private void Update()
     {
-        if (entitys.Count == 0) return;
+        if (entitys.Count == 0 || gameStateManager.gameState == GameState.Paused) return;
 
         for (int i = 0; i < entitys.Count; i++)
         {

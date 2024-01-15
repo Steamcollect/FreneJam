@@ -14,13 +14,10 @@ public class Crossair : MonoBehaviour
         cam = Camera.main;
     }
 
-    private void Start()
-    {
-        Cursor.visible = false;
-    }
-
     private void Update()
     {
+        Cursor.visible = false;
+
         transform.position = Input.mousePosition;
 
         angle -= Time.deltaTime * rotationSpeed;

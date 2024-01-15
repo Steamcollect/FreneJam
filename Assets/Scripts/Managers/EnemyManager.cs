@@ -6,15 +6,17 @@ public class EnemyManager : MonoBehaviour
 {
     public List<EnemyController> enemys;
     GameObject player;
+    GameStateManager gameStateManager;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
     private void Update()
     {
-        if (enemys.Count == 0 || player == null) return;
+        if (enemys.Count == 0 || player == null || gameStateManager.gameState == GameState.Paused) return;
 
         for (int i = 0; i < enemys.Count; i++)
         {

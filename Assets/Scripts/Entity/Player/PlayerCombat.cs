@@ -23,16 +23,20 @@ public class PlayerCombat : MonoBehaviour
     AudioManager audioManager;
     CouldownManager couldownManager;
     BulletManager bulletManager;
+    GameStateManager gameStateManager;
 
     private void Awake()
     {
         audioManager = FindAnyObjectByType<AudioManager>();
         couldownManager = FindAnyObjectByType<CouldownManager>();
         bulletManager= FindAnyObjectByType<BulletManager>();
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
     private void Update()
     {
+        if (gameStateManager.gameState == GameState.Paused) return;
+
         if(isClicking && canAttack) Attack();
 
         isClicking = Input.GetButton("Fire1");
@@ -48,6 +52,8 @@ public class PlayerCombat : MonoBehaviour
         currentBullet.maxPenetration = bullletPenetration;
         currentBullet.moveSpeed = bulletSpeed;
         bulletManager.bullets.Add(currentBullet);
+
+        audioManager.PlayClipAt(transform.position, attackSounds[Random.Range(0, attackSounds.Length)]);
 
         currentAttackPointIndex = (currentAttackPointIndex + 1) % attackPoints.Count;
     }

@@ -9,19 +9,19 @@ public class EnemySpawner : MonoBehaviour
     public Transform enemysContent;
 
     Transform player;
-    CouldownManager couldownManager;
     EnemyManager enemyManager;
+    GameStateManager gameStateManager;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        couldownManager = FindFirstObjectByType<CouldownManager>();
         enemyManager = FindFirstObjectByType<EnemyManager>();
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
     private void Update()
     {
-        if (player == null) return;
+        if (player == null || gameStateManager.gameState == GameState.Paused) return;
 
         for (int i = 0; i < enemySpawnStats.Length; i++)
         {

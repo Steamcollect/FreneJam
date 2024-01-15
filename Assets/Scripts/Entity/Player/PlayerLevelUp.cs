@@ -10,15 +10,17 @@ public class PlayerLevelUp : MonoBehaviour
     public int statsPointRemining;
     public TMP_Text reminingPointsTxt;
 
-    int damagePoint, penetrationPoint, reloadPoint, bulletSpeedPoint, maxHealthPoint, moveSpeedPoint, visionPoint;
-    public Slider damageSlider, penetrationSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, moveSpeedSlider, visionSlider;
-    public GameObject damageButton, penetrationButton, reloadButton, bulletSpeedButton, maxHealthButton, moveSpeedButton, visionButton;
+    int damagePoint, reloadPoint, bulletSpeedPoint, maxHealthPoint, moveSpeedPoint, visionPoint;
+    public Slider damageSlider, reloadSlider, bulletSpeedSlider, maxHealthSlider, moveSpeedSlider, visionSlider;
+    public GameObject damageButton, reloadButton, bulletSpeedButton, maxHealthButton, moveSpeedButton, visionButton;
 
     public Animator upgradePanelAnim;
 
     PlayerCombat playerCombat;
     PlayerController playerController;
     EntityHealth playerHealth;
+    GameStateManager gameStateManager;
+    PauseMenu pauseMenu;
 
     Camera cam;
 
@@ -27,6 +29,8 @@ public class PlayerLevelUp : MonoBehaviour
         playerCombat = FindFirstObjectByType<PlayerCombat>();
         playerController = FindFirstObjectByType<PlayerController>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<EntityHealth>();
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
+        pauseMenu = FindAnyObjectByType<PauseMenu>();
 
         cam = Camera.main;
     }
@@ -44,7 +48,7 @@ public class PlayerLevelUp : MonoBehaviour
 
     public void AddPoint(int currentStat)
     {
-        if (statsPointRemining <= 0) return;
+        if (statsPointRemining <= 0 || pauseMenu.isDead) return;
 
         switch (currentStat)
         {
@@ -55,15 +59,6 @@ public class PlayerLevelUp : MonoBehaviour
                     damagePoint++;
                     damageSlider.DOValue(damagePoint, .4f).SetEase(Ease.OutQuint);
                     if (damagePoint >= 7) damageButton.SetActive(false);
-                }
-                break;
-            case 1:
-                if (penetrationPoint < 7)
-                {
-                    playerCombat.bullletPenetration += 1;
-                    penetrationPoint++;
-                    penetrationSlider.DOValue(penetrationPoint, .4f).SetEase(Ease.OutQuint);
-                    if (penetrationPoint >= 7) penetrationButton.SetActive(false);
                 }
                 break;
             case 2:
@@ -120,6 +115,6 @@ public class PlayerLevelUp : MonoBehaviour
 
         statsPointRemining--;
         reminingPointsTxt.text = statsPointRemining.ToString();
-        if (statsPointRemining <= 0) CloseUpgradePanel();
+        if (statsPointRemining <= 0 && gameStateManager.gameState == GameState.Gameplay) CloseUpgradePanel();
     }
 }

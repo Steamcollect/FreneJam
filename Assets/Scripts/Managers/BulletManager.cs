@@ -7,10 +7,12 @@ public class BulletManager : MonoBehaviour
     public List<Bullet> bullets;
 
     GameObject player;
+    GameStateManager gameStateManager;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
     private void FixedUpdate()
@@ -25,7 +27,11 @@ public class BulletManager : MonoBehaviour
                     bullets.Remove(bullets[i]);
                     i -= 1;
                 }
-                else bullets[i].rb.velocity = bullets[i].transform.up * bullets[i].moveSpeed;
+                else
+                {
+                    if (gameStateManager.gameState == GameState.Gameplay) bullets[i].rb.velocity = bullets[i].transform.up * bullets[i].moveSpeed;
+                    else bullets[i].rb.velocity = Vector2.zero;
+                }
             }
             else
             {

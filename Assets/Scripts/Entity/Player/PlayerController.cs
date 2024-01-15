@@ -16,22 +16,29 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;
     Camera cam;
+    GameStateManager gameStateManager;
 
     private void Awake()
     {
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
     private void Update()
     {
+        if (gameStateManager.gameState == GameState.Paused) return;
+
         Rotate();
      
         GetInput();
     }
     private void FixedUpdate()
     {
-        Move();
+        if (gameStateManager.gameState == GameState.Paused)
+        {
+            rb.velocity = Vector2.zero;
+        }else Move();
     }
 
     void Move()

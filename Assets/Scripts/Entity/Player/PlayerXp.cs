@@ -9,9 +9,13 @@ public class PlayerXp : MonoBehaviour
     public float maxXp;
     public float currentXp;
     public int currentLvl;
+    public int currentScore;
 
     public Slider xpSlider;
     public TMP_Text lvlTxt;
+
+    public Transform popUpContent;
+    public GameObject popUp;
 
     public GameObject playerCanon1;
     public GameObject playerCanon2;
@@ -25,6 +29,7 @@ public class PlayerXp : MonoBehaviour
     EnemySpawner enemySpawner;
     EntityHealth playerHealth;
     PlayerCombat playerCombat;
+    Camera cam;
 
     private void Awake()
     {
@@ -32,6 +37,7 @@ public class PlayerXp : MonoBehaviour
         playerCombat = FindFirstObjectByType<PlayerCombat>();
         enemySpawner = FindFirstObjectByType<EnemySpawner>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<EntityHealth>();
+        cam = Camera.main;
     }
 
     private void Start()
@@ -43,9 +49,19 @@ public class PlayerXp : MonoBehaviour
         xpSlider.value = currentXp;
     }
 
-    public void TakeXp(float xpGiven)
+    public void TakeXp(float xpGiven, int scoreGiven, Vector2 pos)
     {
         currentXp += xpGiven;
+        currentScore += scoreGiven;
+
+        if (scoreGiven != 0)
+        {
+            GameObject tmp = Instantiate(popUp, popUpContent);
+            PopUp tmpPopUp = tmp.GetComponent<PopUp>();
+            tmpPopUp.pos = pos;
+            tmpPopUp.cam = cam;
+            tmpPopUp.text.text = scoreGiven.ToString();
+        }
 
         if(currentXp >= maxXp)
         {
@@ -57,7 +73,7 @@ public class PlayerXp : MonoBehaviour
             maxXp *= 1.18f;
             xpSlider.maxValue = maxXp;
             xpSlider.value = currentXp;
-            TakeXp(xpRemining);
+            TakeXp(xpRemining, 0, Vector2.zero);
 
             switch (currentLvl)
             {
@@ -101,7 +117,7 @@ public class PlayerXp : MonoBehaviour
 
             for (int i = 0; i < enemySpawner.enemySpawnStats.Length; i++)
             {
-                if (enemySpawner.enemySpawnStats[i].haveTheLevelToSpawn) enemySpawner.enemySpawnStats[i].spawningDelay *= .98f;
+                if (enemySpawner.enemySpawnStats[i].haveTheLevelToSpawn) enemySpawner.enemySpawnStats[i].spawningDelay *= .95f;
             }
             playerHealth.GiveHealth(playerHealth.maxHealth * .1f);
             levelUpManager.OpenUpgradePanel();
