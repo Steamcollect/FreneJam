@@ -74,8 +74,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281182125
-  m_fontColor: {r: 0.6792453, g: 0.655984, b: 0.17621931, a: 1}
+    rgba: 4279873977
+  m_fontColor: {r: 0.7264151, g: 0.6956061, b: 0.09868276, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -185,6 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 4594605322897016966}
+  cam: {fileID: 0}
+  pos: {x: 0, y: 0}
 --- !u!95 &4425534009729757263
 Animator:
   serializedVersion: 7
